@@ -235,3 +235,10 @@
 1341006774 c:\program files (x86)\codeblocks\mingw\include\math.h
 	<_mingw.h>
 
+1561080691 source:d:\documents\semester 6\pemrograman grafis\planeengine\main.cpp
+	<stdlib.h>
+	"windows.h"
+	"GL/glut.h"
+	"stdio.h"
+	"math.h"
+
