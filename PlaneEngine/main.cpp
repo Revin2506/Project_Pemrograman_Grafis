@@ -1,16 +1,3 @@
-/*
- * GLUT Shapes Demo
- *
- * Written by Nigel Stewart November 2003
- *
- * This program is test harness for the sphere, cone
- * and torus shapes in GLUT.
- *
- * Spinning wireframe and smooth shaded shapes are
- * displayed until the ESC or q key is pressed.  The
- * number of geometry stacks and slices can be adjusted
- * using the + and - keys.
- */
 #ifdef __APPLE__
 #else
 #endif
@@ -20,10 +7,14 @@
 #include "GL/glut.h"
 #include "stdio.h"
 #include "math.h"
+#define checkImageWidth 64
+#define checkImageHeight 64
+
+    float sudutbaling=0;
 
     float R_Z=0.0f, R_X=0.0f, R_Y=0.0f;
     float T_Z=-16.0f, T_X=0.0f, T_Y=0.0f;
-    float view_rotx = 90.0f, view_roty = 180.0f;
+    float view_rotx = 0.0f, view_roty = 0.0f;
     int oldMouseX, oldMouseY;
 
     float Cx = 1, Cy = 1.10, Cz = 0.5;
@@ -75,36 +66,21 @@
     };
     Vector depanBelakang, samping, vertikal;
 
-    void initGL()
-    {
-        glShadeModel(GL_FLAT);
-
+    void initGL(){
         depanBelakang.set_values(0.0f, 0.0f, -1.0f);
         samping.set_values(1.0f, 0.0f, 0.0f);
         vertikal.set_values(0.0f, 1.0f, 0.0f);
-
-        float ambient[] = {1.0f,1.0f,1.0f,1.0f};
-        float diffuse[] = {0.0f,1.0f,1.0f,1.0f};
-        float specular[] = {1.0f,0.0f,1.0f,1.0f};
-        float position[] = {20.0f,30.0f,20.0f,0.0f};
-
+        float ambient[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        float diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
+        float position[] = {1.0f, 1.0f, 1.0f, 0.0f};
         glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
         glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
         glLightfv(GL_LIGHT0, GL_POSITION, position);
-        glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-
-        float mambient[] ={0.0, 0.0, 0.0, 1.0f };
-        float mdiffuse[] ={0.0, 0.0, 0.46f, 0.55f };
-        float mspecular[] ={0.0, 0.662f, 0.662f, 0.55f };
-        float mshine =76.8f;
-        glMaterialfv(GL_FRONT,GL_AMBIENT,mambient);
-        glMaterialfv(GL_FRONT,GL_DIFFUSE,mdiffuse);
-        glMaterialfv(GL_FRONT,GL_SPECULAR,mspecular);
-        glMaterialf (GL_FRONT,GL_SHININESS,mshine);
-        glEnable(GL_LIGHTING);
         glEnable(GL_LIGHT0);
+        glEnable(GL_LIGHTING);
         glEnable(GL_DEPTH_TEST);
-        glEnable(GL_NORMALIZE);
+        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+        glShadeModel(GL_SMOOTH);
     }
 
     void ConnectingRodpart01()
@@ -120,13 +96,21 @@
 
     void ConnectingRod01()
     {
+    float amb[] = {0.294f, 1.0f, 0.294f, 0.294f };
+    float diff[] = {0.46f, 0.46f, 0.46f, 0.55f };
+    float spec[] = {0.662f, 0.662f, 0.662f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_LENGTH=0.4f;
         float BODY_RADIUS=0.3f;
         float BODY_RADIUS2=0.2f;
         float BODY_RADIUS3=0.15f;
         float BODY_RADIUS4=0.3f;
-        int SLICES=120;
-        int STACKS=120;
+        int SLICES=72;
+        int STACKS=72;
             GLUquadric *q = gluNewQuadric();
             glPushMatrix();
             glTranslatef(-0.2f, 0.0f, 0.2f);
@@ -159,13 +143,21 @@
 
     void ConnectingRod02()
     {
+    float amb[] = {0.294f, 0.294f, 1.0f, 0.294f };
+    float diff[] = {0.46f, 0.46f, 0.46f, 0.55f };
+    float spec[] = {0.662f, 0.662f, 0.662f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_LENGTH=0.4f;
         float BODY_RADIUS=0.3f;
         float BODY_RADIUS2=0.2f;
         float BODY_RADIUS3=0.15f;
         float BODY_RADIUS4=0.3f;
-        int SLICES=120;
-        int STACKS=120;
+        int SLICES=72;
+        int STACKS=72;
             GLUquadric *q = gluNewQuadric();
             glPushMatrix();
             glTranslatef(-0.25f, 0.0f, 0.2f);
@@ -187,6 +179,14 @@
 
     void ConnectingRodpart03()
     {
+    float amb[] = {0.294f, 0.294f, 1.0f, 0.294f };
+    float diff[] = {0.46f, 0.46f, 0.46f, 0.55f };
+    float spec[] = {0.662f, 0.662f, 0.662f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
             GLUquadric *q = gluNewQuadric();
             glPushMatrix();
             glRotatef(90, 0.0f, 1.0f, 0.0f);
@@ -198,13 +198,21 @@
 
     void ConnectingRod03()
     {
+    float amb[] = {0.294f, 0.294f, 0.294f, 1.0f };
+    float diff[] = {0.46f, 0.46f, 0.46f, 0.55f };
+    float spec[] = {0.662f, 0.662f, 0.662f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_LENGTH=0.4f;
         float BODY_RADIUS=0.3f;
         float BODY_RADIUS2=0.2f;
         float BODY_RADIUS3=0.15f;
         float BODY_RADIUS4=0.3f;
-        int SLICES=120;
-        int STACKS=120;
+        int SLICES=72;
+        int STACKS=72;
             GLUquadric *q = gluNewQuadric();
             glPushMatrix();
             glTranslatef(-0.25f, 0.0f, 0.2f);
@@ -225,18 +233,10 @@
 
     void ThrustDirection01()
         {
-        float amb[] = {0.34f, 0.34f, 0.34f, 1.0f};
-        float diff[] = {0.41f, 0.41f, 0.41f, 1.0f};
-        float spec[] = {0.11f, 0.11f, 0.11f, 1.0f};
-        float shine = 200.0f;
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_LENGTH = 2.5f;
         float BODY_RADIUS = 0.3f;
-        int SLICES = 360;
-        int STACKS = 360;
+        int SLICES = 72;
+        int STACKS = 72;
         GLUquadric *q= gluNewQuadric();
         gluCylinder(q, BODY_RADIUS, BODY_RADIUS, BODY_LENGTH, SLICES, STACKS);
         gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
@@ -246,18 +246,10 @@
 
     void ThrustDirection02()
         {
-        float amb[] = {0.34f, 0.34f, 0.34f, 1.0f};
-        float diff[] = {0.41f, 0.41f, 0.41f, 1.0f};
-        float spec[] = {0.11f, 0.11f, 0.11f, 1.0f};
-        float shine = 200.0f;
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_LENGTH = 0.5f;
         float BODY_RADIUS = 0.3f;
-        int SLICES = 360;
-        int STACKS = 360;
+        int SLICES = 72;
+        int STACKS = 72;
         GLUquadric *q= gluNewQuadric();
         gluCylinder(q, BODY_RADIUS, BODY_RADIUS, BODY_LENGTH, SLICES, STACKS);
         gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
@@ -267,10 +259,18 @@
 
     void Ring()
     {
+    float amb[] = {0.1745f, 0.01175f, 0.01175f, 0.55f};
+    float diff[] = {0.61424f, 0.04136f, 0.04136f, 0.55f };
+    float spec[] = {0.727811f, 0.626959f, 0.626959f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_RADIUS3=0.3f;
         float BODY_RADIUS4=1.5f;
-        int SLICES=180;
-        int STACKS=180;
+        int SLICES=72;
+        int STACKS=72;
             GLUquadric *q = gluNewQuadric();
             glPushMatrix();
             glTranslatef(0.0f, 0.0f, -1.6f);
@@ -290,18 +290,10 @@
 
     void Piston01()
         {
-        float amb[] = {0.34f, 0.34f, 0.34f, 1.0f};
-        float diff[] = {0.41f, 0.41f, 0.41f, 1.0f};
-        float spec[] = {0.11f, 0.11f, 0.11f, 1.0f};
-        float shine = 200.0f;
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_LENGTH = 0.25f;
         float BODY_RADIUS = 1.0f;
-        int SLICES = 360;
-        int STACKS = 360;
+        int SLICES = 72;
+        int STACKS = 72;
         GLUquadric *q= gluNewQuadric();
         gluCylinder(q, BODY_RADIUS, BODY_RADIUS, BODY_LENGTH, SLICES, STACKS);
         gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
@@ -311,10 +303,18 @@
 
     void Piston()
         {
+    float amb[] = {0.294f, 0.294f, 0.294f, 1.0f };
+    float diff[] = {0.46f, 0.46f, 0.46f, 0.55f };
+    float spec[] = {0.662f, 0.662f, 0.662f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
         float BODY_RADIUS3=0.5f;
         float BODY_RADIUS4=1.0f;
-        int SLICES=180;
-        int STACKS=180;
+        int SLICES=72;
+        int STACKS=72;
             GLUquadric *q = gluNewQuadric();
             glPushMatrix();
             glTranslatef(0.0f, 0.0f, 1.125f);
@@ -326,6 +326,87 @@
             glTranslatef(0.0f, 0.0f, 1.0f);
             gluDisk(q, BODY_RADIUS3, BODY_RADIUS4, SLICES, STACKS);
         }
+
+    void tabung(float r, float t) {
+        float BODY_LENGTH = t;
+        float BODY_RADIUS = r;
+        int SLICES = 72;
+        int STACKS = 72;
+        GLUquadric *q = gluNewQuadric();
+        gluCylinder(q, BODY_RADIUS, BODY_RADIUS, BODY_LENGTH, SLICES, STACKS);
+        gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
+        glTranslatef(0.0f, 0.0f, BODY_LENGTH);
+        gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
+    }
+
+    void kerucut(float rb, float rt, float t) {
+        float BODY_LENGTH = t;
+        float BODY_RADIUS_BOTTOM = rb;
+        float BODY_RADIUS_TOP = rt;
+        int SLICES = 72;
+        int STACKS = 72;
+        GLUquadric *q = gluNewQuadric();
+        gluCylinder(q, BODY_RADIUS_BOTTOM, BODY_RADIUS_TOP, BODY_LENGTH, SLICES, STACKS);
+        gluDisk(q, 0.0f, BODY_RADIUS_BOTTOM, SLICES, STACKS);
+        glTranslatef(0.0f, 0.0f, BODY_LENGTH);
+        gluDisk(q, 0.0f, BODY_RADIUS_TOP, SLICES, STACKS);
+    }
+
+    void propeller() {
+    float amb[] = {1.0f, 1.0f, 0.294f,  0.294f };
+    float diff[] = {0.46f, 0.46f, 0.46f, 0.55f };
+    float spec[] = {0.662f, 0.662f, 0.662f, 0.55f };
+    float shine = 200.0f;
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, amb);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
+        float pjg_sayap = 5.0f;
+        glPushMatrix();
+        glTranslatef(0.0f,0.0f,-0.75f);
+        kerucut(0.7f, 0.5f, 0.5f);
+        tabung(0.3f, 0.75f);
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(0.0f,0.0f,0.0f);
+        glRotatef(sudutbaling, 0.0f, 0.0f, 1.0f);
+        glBegin(GL_QUADS);
+            glVertex3f(0.25f,0.25f,0.0f);
+            glVertex3f(0.25f,-0.25f,0.0f);
+            glVertex3f(pjg_sayap,-0.35f,0.0f);
+            glVertex3f(pjg_sayap,0.35f,0.0f);
+        glEnd();
+        glBegin(GL_QUADS);
+            glVertex3f(0.25f,0.25f,0.0f);
+            glVertex3f(-0.25f,0.25f,0.0f);
+            glVertex3f(-0.35f,pjg_sayap,0.0f);
+            glVertex3f(0.35f,pjg_sayap,0.0f);
+        glEnd();
+        glBegin(GL_QUADS);
+            glVertex3f(-0.25f,0.25f,0.0f);
+            glVertex3f(-0.25f,-0.25f,0.0f);
+            glVertex3f(-pjg_sayap,-0.35f,0.0f);
+            glVertex3f(-pjg_sayap,0.35f,0.0f);
+        glEnd();
+        glBegin(GL_QUADS);
+            glVertex3f(-0.25f,-0.25f,0.0f);
+            glVertex3f(0.25f,-0.25f,0.0f);
+            glVertex3f(0.35f,-pjg_sayap,0.0f);
+            glVertex3f(-0.35f,-pjg_sayap,0.0f);
+        glEnd();
+        glPopMatrix();
+
+          sudutbaling += 5;
+              if(sudutbaling == 360) {
+                  sudutbaling = 0;
+        }
+    }
+
+    float piston2 = -1.75;
+    float piston1 = 1.75;
+    float arah2 = 0.75;
+    float arah1 = 0.75;
 
     void vectorMovement(float toMove[], float magnitude, float direction){
         float speedX = toMove[0]*magnitude*direction;
@@ -380,7 +461,7 @@
         glRotatef(R_Z, 0.0f, 0.0f, 1.0f);
 
         glPushMatrix();
-        glTranslatef(1.75f, 0.0f, -0.65f);
+        glTranslatef(piston1, 0.0f, -0.65f);
         glRotatef(-90, 0.0f, -1.0f, 0.0f);
         Piston();
         glPopMatrix();
@@ -406,6 +487,12 @@
         Ring();
         glPopMatrix();
 
+        glPushMatrix();
+        glTranslatef(0.0f, 0.0f, 3.0f);
+        glRotatef(0, 0.0f, 0.0f, 0.0f);
+        propeller();
+        glPopMatrix();
+
 
         glPushMatrix();
         glTranslatef(-1.0f, 0.0f, -1.45f);
@@ -415,7 +502,7 @@
 
 
         glPushMatrix();
-        glTranslatef(-1.75f, 0.0f, -1.9f);
+        glTranslatef(piston2, 0.0f, -1.9f);
         glRotatef(90, 0.0f, -1.0f, 0.0f);
         Piston();
         glPopMatrix();
@@ -431,6 +518,35 @@
         glRotatef(0, 0.0f, -1.0f, 0.0f);
         ConnectingRod02();
         glPopMatrix();
+
+        //pergerakan piston1 masih bermasalah
+        if(arah1 < 2.74 ){
+                if(arah1 < 1.76){
+                    piston1 = piston1 +0.01;
+                }
+                else if(arah1 > 1.75){
+                    piston1 = piston1 -0.01;
+                }
+        }
+        else if(arah1 == 2.75){
+            arah1 = 0.75;
+            }
+
+        //pergerakan piston2 msih bermasalah
+        if(arah2 > -1.27 ){
+                if(arah2 > -0.28){
+                    piston2 = piston2 -0.01;
+                }
+                else if(arah2 < -0.25){
+                    piston2 = piston2 +0.01;
+                }
+        }
+        else if(arah2 == -1.25){
+            arah2 = -0.25;
+            }
+
+        arah1+=0.01;
+        arah2-=0.01;
 
         glFlush();
         glutSwapBuffers();
@@ -519,7 +635,7 @@
                     R_Z=0.0f, R_X=0.0f, R_Y=0.0f;
                     T_Z=-16.0f, T_X=0.0f, T_Y=0.0f;
 
-                    view_rotx = 90.0f, view_roty = 180.0f;
+                    view_rotx = 0.0f, view_roty = 0.0f;
 
                     Cx = 1, Cy = 1.10, Cz = 0.5;
                     Lx = 1, Ly = 1, Lz = 0;
@@ -538,6 +654,12 @@
                 break;
             case 48: // Translasi sumbu X+ dengan tombol A
                     T_X = T_X + 0.5f;
+                break;
+            case 90: // Zoom in dengan tombol Z
+                    T_Z = T_Z + 0.5f;
+                break;
+            case 88: // zoom out dengan tombol X
+                    T_Z = T_Z - 0.5f;
                 break;
             }
         }
