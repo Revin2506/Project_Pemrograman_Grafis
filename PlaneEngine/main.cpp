@@ -632,16 +632,6 @@
                     Lx = 1, Ly = 1, Lz = 0;
                     Tx = 0, Ty = 1, Tz = 0;
 
-                    angle_depanBelakang = 0.0f;
-                    angle_depanBelakang2 = 0.0f;
-                    angle_samping = 0.0f;
-                    angle_samping2 = 0.0f;
-                    angle_vertikal = 0.0f;
-                    angle_vertikal2 = 0.0f;
-
-                    depanBelakang.set_values(0.0f, 0.0f, -1.0f);
-                    samping.set_values(1.0f, 0.0f, 0.0f);
-                    vertikal.set_values(0.0f, 1.0f, 0.0f);
                 break;
             case 48: // Translasi sumbu X+ dengan tombol A
                     T_X = T_X + 0.5f;
