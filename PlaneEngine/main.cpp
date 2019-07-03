@@ -397,7 +397,7 @@
         glEnd();
         glPopMatrix();
 
-          sudutbaling += 5;
+          sudutbaling += 50;
               if(sudutbaling == 360) {
                   sudutbaling = 0;
         }
@@ -524,7 +524,7 @@
                 if(arah1 < 1.76){
                     piston1 = piston1 +0.01;
                 }
-                else if(arah1 > 1.75){
+                else if(arah1 > 1.76){
                     piston1 = piston1 -0.01;
                 }
         }
@@ -609,15 +609,6 @@
 
 
 
-
-
-
-            case 81: // Translasi sumbu Z+ dengan tombol Q
-                    T_Z = T_Z + 0.5f;
-                break;
-            case 69: // Translasi sumbu Z- dengan tombol E
-                    T_Z = T_Z - 0.5f;
-                break;
             case 87: // Translasi sumbu Y+ dengan tombol W
                     T_Y = T_Y + 0.5f;
                 break;
@@ -664,50 +655,6 @@
             }
         }
 
-      void keyControl(int k, int x, int y) {
-            switch(k) {
-            case GLUT_KEY_RIGHT: // Arah Kanan
-                    angle_vertikal += 1.5f;
-                    samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                    //memutar vector sumbu z terhadap x (target, patokan)
-                    depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                    cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-                    angle_vertikal2 = angle_vertikal;
-                break;
-            case GLUT_KEY_LEFT: // Arah Kiri
-                    angle_vertikal -= 1.5f;
-                    samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                    depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-                    cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-                    angle_vertikal2 = angle_vertikal;
-                break;
-            case GLUT_KEY_DOWN: // Arah Bawah
-                    angle_samping += 1.5f;
-                    depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-                    cameraRotation(samping, angle_samping - angle_samping2);
-                    angle_samping2 = angle_samping;
-                break;
-            case GLUT_KEY_UP: // Arah Atas
-                    angle_samping -= 1.5f;
-                    depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-                    cameraRotation(samping, angle_samping - angle_samping2);
-                    angle_samping2 = angle_samping;
-                break;
-            case GLUT_KEY_PAGE_UP: // Page UP
-                    angle_depanBelakang += 1.5f;
-                    vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-                    cameraRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-                    angle_depanBelakang2 = angle_depanBelakang;
-                break;
-            case GLUT_KEY_PAGE_DOWN: // Page DOWN
-                    angle_depanBelakang -= 1.5f;
-                    vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-                    cameraRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-                    angle_depanBelakang2 = angle_depanBelakang;
-                break;
-          }
-      }
-
 
     int main(int argc, char **argv)
     {
@@ -718,7 +665,6 @@
         glutCreateWindow("PLANE PISTON");
         glutDisplayFunc(display);
         glutReshapeFunc(reshape);
-        glutSpecialFunc(keyControl);
         glutKeyboardFunc(keyFunction);
         initGL();
         glutMouseFunc(mouseControl);
