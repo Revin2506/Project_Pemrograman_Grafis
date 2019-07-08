@@ -10,6 +10,10 @@
 #define checkImageWidth 64
 #define checkImageHeight 64
 
+#include <iostream>
+using namespace std;
+
+
     float sudutbaling=0;
 
     float R_Z=0.0f, R_X=0.0f, R_Y=0.0f;
@@ -229,6 +233,7 @@
             gluCylinder(q, BODY_RADIUS2, BODY_RADIUS2, 0.6f, SLICES, STACKS);
             glTranslatef(0.0f, 0.0f, 0.6f);
             gluDisk(q, 0.2f, BODY_RADIUS, SLICES, STACKS);
+
     }
 
     void ThrustDirection01()
@@ -277,7 +282,7 @@
             ThrustDirection01();
             glPopMatrix();
             glPushMatrix();
-            glTranslatef(0.0f, 0.0f, -4.7f);
+            glTranslatef(0.0f, 0.0f, -4.9f);
             ThrustDirection02();
             glPopMatrix();
             gluDisk(q, BODY_RADIUS3, BODY_RADIUS4, SLICES, STACKS);
@@ -397,7 +402,7 @@
         glEnd();
         glPopMatrix();
 
-          sudutbaling += 50;
+          sudutbaling += 12.5;
               if(sudutbaling == 360) {
                   sudutbaling = 0;
         }
@@ -405,8 +410,14 @@
 
     float piston2 = -1.75;
     float piston1 = 1.75;
-    float arah2 = 0.75;
-    float arah1 = 0.75;
+    float connectroad1 = 2.0;
+    float connectroad2 = -2.0;
+    float arah1 = 0.01;
+    float arah2 = 0.01;
+    boolean jalan1;
+    float putar1 = 0.2;
+    float putar2 = 0.2;
+    float putar3 = 0.2;
 
     void vectorMovement(float toMove[], float magnitude, float direction){
         float speedX = toMove[0]*magnitude*direction;
@@ -461,21 +472,21 @@
         glRotatef(R_Z, 0.0f, 0.0f, 1.0f);
 
         glPushMatrix();
-        glTranslatef(piston1, 0.0f, -0.65f);
+        glTranslatef(piston1, 0.0f, -0.75f);
         glRotatef(-90, 0.0f, -1.0f, 0.0f);
-        Piston();
+        Piston(); //piston bagina kanan
         glPopMatrix();
 
         glPushMatrix();
-        glTranslatef(2.0f, 0.0f, -0.4f);
-        glRotatef(180, 0.0f, -1.0f, 0.0f);
-        ConnectingRod01();
+        glTranslatef(connectroad1, 0.0f, -0.5f);
+        glRotatef(180, 0.0f, 0.0f, 0.0f);
+        ConnectingRod01(); // bagian piston cennet hijau bawah
         glPopMatrix();
 
         glPushMatrix();
-        glTranslatef(-1.0f, 0.0f, -0.35f);
-        glRotatef(0, 0.0f, -1.0f, 0.0f);
-        ConnectingRod02();
+        glTranslatef(0.0f, 0.0f, -0.4f);
+        glRotatef(putar1, 0.0f, 0.0f, 1.0f);
+        ConnectingRod02();// bagian connect bawah
         glPopMatrix();
 
 
@@ -495,58 +506,62 @@
 
 
         glPushMatrix();
-        glTranslatef(-1.0f, 0.0f, -1.45f);
-        glRotatef(0, 0.0f, -1.0f, 0.0f);
-        ConnectingRod03();
+        glTranslatef(-1.0f, 0.0f, -1.6f);
+        glRotatef(putar3, 0.0f, 0.0f, 1.0f);
+        ConnectingRod03(); // bagian connect biru tengah
         glPopMatrix();
 
 
         glPushMatrix();
-        glTranslatef(piston2, 0.0f, -1.9f);
+        glTranslatef(piston2, 0.0f, -2.05f);
         glRotatef(90, 0.0f, -1.0f, 0.0f);
-        Piston();
+        Piston();// piston kiri
         glPopMatrix();
 
         glPushMatrix();
-        glTranslatef(-2.0f, 0.0f, -2.15f);
-        glRotatef(0, 0.0f, -1.0f, 0.0f);
-        ConnectingRod01();
+        glTranslatef(connectroad2, 0.0f, -2.3f);
+        glRotatef(0, 0.0f, 0.0f, 0.0f);
+        ConnectingRod01(); // bagian piston cennet hijau atas
         glPopMatrix();
 
         glPushMatrix();
-        glTranslatef(0.0f, 0.0f, -2.65f);
-        glRotatef(0, 0.0f, -1.0f, 0.0f);
-        ConnectingRod02();
+        glTranslatef(0.0f, 0.0f, -2.8f);
+        glRotatef(putar2, 0.0f, 0.0f, 1.0f);
+        ConnectingRod02(); // bagian  connect biru atas
         glPopMatrix();
 
-        //pergerakan piston1 masih bermasalah
-        if(arah1 < 2.74 ){
-                if(arah1 < 1.76){
-                    piston1 = piston1 +0.01;
-                }
-                else if(arah1 > 1.76){
-                    piston1 = piston1 -0.01;
-                }
-        }
-        else if(arah1 == 2.75){
-            arah1 = 0.75;
-            }
+//----------------------------------------------------------------------
 
-        //pergerakan piston2 msih bermasalah
-        if(arah2 > -1.27 ){
-                if(arah2 > -0.28){
-                    piston2 = piston2 -0.01;
-                }
-                else if(arah2 < -0.25){
-                    piston2 = piston2 +0.01;
-                }
-        }
-        else if(arah2 == -1.25){
-            arah2 = -0.25;
-            }
+        // cek coordinat
+        //cout << "piston : " << piston1 << "\n";
+        //cout << "connect : " << connectroad1 << "\n";
+        //piston fix
 
-        arah1+=0.01;
-        arah2-=0.01;
+        putar1++;
+        putar2++;
+        putar3++;
+
+        if(piston1 >= 2.75){
+            jalan1 = true;
+        }
+        else if(piston1 <= 1.75){
+            jalan1 = false;
+        }
+
+        if(jalan1 == true){
+            piston1-=0.01;
+            piston2+=0.01;
+            connectroad1-=0.01;
+            connectroad2+=0.01;
+
+
+        }else{
+            piston1+=0.01;
+            piston2-=0.01;
+            connectroad1+=0.01;
+            connectroad2-=0.01;
+
+        }
 
         glFlush();
         glutSwapBuffers();
